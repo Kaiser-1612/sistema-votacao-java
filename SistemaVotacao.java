@@ -8,4 +8,7 @@ public class SistemaVotacao {
         System.out.println("Sistema de votação iniciado.");
         scanner.close();
     }
+    static final int maxCandidatos = 5;
+    static final int totalTurmast = 3;
+    static final int maxPorTurma = 10;
 }
