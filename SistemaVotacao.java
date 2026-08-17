@@ -18,5 +18,9 @@ public class SistemaVotacao {
     int[][] votPorTurma = new int[totalTurmas][maxPorTurma];
     int[] quantiVtTurma = new int[totalTurmas];
     int quantiCandi = 0;
+    }
 
-}
+
+
+
+
