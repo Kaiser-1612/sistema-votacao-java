@@ -62,4 +62,19 @@ public static void main(String[] args) {
         }
 
     } while (opcao != 5);
+    scanner.close();
+}
+static int lerInteiro(String mensagem) {
+    while (true) {
+        System.out.print(mensagem);
+
+        if (scanner.hasNextInt()) {
+            int valor = scanner.nextInt();
+            scanner.nextLine();
+            return valor;
+        }
+
+        System.out.println("Entrada inválida. Digite um número.");
+        scanner.nextLine();
+    }
 }
