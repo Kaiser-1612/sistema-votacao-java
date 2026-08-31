@@ -59,6 +59,7 @@ public class SistemaVotacao {
         } while (opcao != 5);
         scanner.close();
     }
+
     static int lerInteiro(String mensagem) {
         while (true) {
             System.out.print(mensagem);
@@ -73,6 +74,7 @@ public class SistemaVotacao {
             scanner.nextLine();
         }
     }
+
     static void cadastrarCandidatos() {
         if (quantidadeCandidatos > 0) {
             System.out.println("Os candidatos já foram cadastrados.");
@@ -148,5 +150,15 @@ public class SistemaVotacao {
 
         return indiceEncontrado;
     }
+
+    static void mostrarCandidatos() {
+        System.out.println("\nCandidatos disponíveis:");
+        for (int i = 0; i < quantidadeCandidatos; i++) {
+            System.out.println(
+                    numerosCandidatos[i] + " - " + nomesCandidatos[i]
+            );
+        }
+    }
 }
+
 
