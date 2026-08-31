@@ -223,6 +223,17 @@ public class SistemaVotacao {
             return;
         }
 
+
+        int totalVotos = 0;
+        for (int i = 0; i < quantidadeCandidatos; i++) {
+            totalVotos += votosCandidatos[i];
+        }
+
+        if (totalVotos == 0) {
+            System.out.println("Nenhum voto foi registrado.");
+            return;
+        }
+
         System.out.println("\n=== RESULTADO FINAL ===");
         for (int i = 0; i < quantidadeCandidatos; i++) {
             System.out.println(nomesCandidatos[i] + " (" + numerosCandidatos[i] + "): " + votosCandidatos[i] + " votos");
@@ -246,6 +257,7 @@ public class SistemaVotacao {
             System.out.println("\nVencedor: " + nomesCandidatos[vencedorIndice] + " com " + votosCandidatos[vencedorIndice] + " votos.");
         }
     }
+
 
 
     static void exibirMatrizVotos() {
