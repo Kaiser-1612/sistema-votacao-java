@@ -159,6 +159,20 @@ public class SistemaVotacao {
             );
         }
     }
+    static int obterIndiceTurma() {
+        int turma;
+
+        do {
+            turma = lerInteiro("Informe a turma de 1 a 3: ");
+
+            if (turma < 1 || turma > TOTAL_TURMAS) {
+                System.out.println("Turma inválida.");
+            }
+        } while (turma < 1 || turma > TOTAL_TURMAS);
+
+        return turma - 1;
+    }
+
 }
 
 
