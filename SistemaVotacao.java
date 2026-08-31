@@ -217,7 +217,6 @@ public class SistemaVotacao {
         }
     }
 
-    // Método corrigido para exibir a apuração total e o vencedor/empate
     static void exibirResultado() {
         if (quantidadeCandidatos == 0) {
             System.out.println("Nenhum candidato cadastrado.");
@@ -248,7 +247,6 @@ public class SistemaVotacao {
         }
     }
 
-    // Método que utiliza o obterIndiceTurma() para exibir os votos salvos na linha da matriz
     static void exibirMatrizVotos() {
         if (quantidadeCandidatos == 0) {
             System.out.println("Nenhum candidato cadastrado.");
