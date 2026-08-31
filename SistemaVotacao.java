@@ -33,19 +33,19 @@ public class SistemaVotacao {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Cadastro selecionado.");
+                    cadastrarCandidatos();
                     break;
 
                 case 2:
-                    System.out.println("Votação selecionada.");
+                    iniciarVotacao();
                     break;
 
                 case 3:
-                    System.out.println("Resultado selecionado.");
+                    exibirResultado();
                     break;
 
                 case 4:
-                    System.out.println("Matriz selecionada.");
+                    exibirMatrizVotos();
                     break;
 
                 case 5:
@@ -247,25 +247,22 @@ public class SistemaVotacao {
         }
     }
 
+
     static void exibirMatrizVotos() {
-        if (quantidadeCandidatos == 0) {
-            System.out.println("Nenhum candidato cadastrado.");
-            return;
-        }
+        System.out.println("\n===== MATRIZ DE VOTOS =====");
 
-        System.out.println("\n=== MATRIZ DE VOTOS POR TURMA ===");
-        int indiceTurma = obterIndiceTurma();
+        for (int i = 0; i < TOTAL_TURMAS; i++) {
+            System.out.print("Turma " + (i + 1) + ": ");
 
-        if (quantidadeVotosTurma[indiceTurma] == 0) {
-            System.out.println("Nenhum voto foi registrado para a Turma " + (indiceTurma + 1) + " ainda.");
-            return;
-        }
+            for (int j = 0; j < MAX_VOTANTES_POR_TURMA; j++) {
+                if (j < quantidadeVotosTurma[i]) {
+                    System.out.print(votosPorTurma[i][j] + " ");
+                } else {
+                    System.out.print("- ");
+                }
+            }
 
-        System.out.println("\nHistórico de votos salvos para a Turma " + (indiceTurma + 1) + ":");
-        for (int i = 0; i < quantidadeVotosTurma[indiceTurma]; i++) {
-            int votoCandidato = votosPorTurma[indiceTurma][i];
-            int indCand = buscarCandidato(votoCandidato);
-            System.out.println("Eleitor " + (i + 1) + ": Voto no número " + votoCandidato + " (" + nomesCandidatos[indCand] + ")");
+            System.out.println();
         }
     }
 }
