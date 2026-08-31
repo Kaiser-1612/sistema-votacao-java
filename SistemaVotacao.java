@@ -172,7 +172,104 @@ public class SistemaVotacao {
 
         return turma - 1;
     }
+    static void iniciarVotacao() {
+        if (quantidadeCandidatos == 0) {
+            System.out.println("Cadastre os candidatos antes de iniciar a votação.");
+            return;
+        }
 
+        int indiceTurma = obterIndiceTurma();
+        int turmaReal = indiceTurma + 1;
+
+        if (quantidadeVotosTurma[indiceTurma] >= MAX_VOTANTES_POR_TURMA) {
+            System.out.println("Essa turma já atingiu o limite de votantes.");
+            return;
+        }
+
+        mostrarCandidatos();
+        System.out.println("\nDigite 0 para encerrar a votação desta turma.");
+
+        while (quantidadeVotosTurma[indiceTurma] < MAX_VOTANTES_POR_TURMA) {
+            int numero = lerInteiro("\nNúmero do candidato: ");
+
+            if (numero == 0) {
+                System.out.println("Votação encerrada.");
+                break;
+            }
+
+            int indiceCandidato = buscarCandidato(numero);
+
+            if (indiceCandidato == -1) {
+                System.out.println("Candidato inexistente. Tente novamente.");
+                continue;
+            }
+
+            int posicionVoto = quantidadeVotosTurma[indiceTurma];
+            votosPorTurma[indiceTurma][posicionVoto] = numero;
+            quantidadeVotosTurma[indiceTurma]++;
+            votosCandidatos[indiceCandidato]++;
+
+            System.out.println("Voto registrado com sucesso.");
+        }
+
+        if (quantidadeVotosTurma[indiceTurma] == MAX_VOTANTES_POR_TURMA) {
+            System.out.println("Limite de 10 votantes atingido.");
+        }
+    }
+
+    // Método corrigido para exibir a apuração total e o vencedor/empate
+    static void exibirResultado() {
+        if (quantidadeCandidatos == 0) {
+            System.out.println("Nenhum candidato cadastrado.");
+            return;
+        }
+
+        System.out.println("\n=== RESULTADO FINAL ===");
+        for (int i = 0; i < quantidadeCandidatos; i++) {
+            System.out.println(nomesCandidatos[i] + " (" + numerosCandidatos[i] + "): " + votosCandidatos[i] + " votos");
+        }
+
+        int vencedorIndice = 0;
+        boolean empate = false;
+
+        for (int i = 1; i < quantidadeCandidatos; i++) {
+            if (votosCandidatos[i] > votosCandidatos[vencedorIndice]) {
+                vencedorIndice = i;
+                empate = false;
+            } else if (votosCandidatos[i] == votosCandidatos[vencedorIndice]) {
+                empate = true;
+            }
+        }
+
+        if (empate) {
+            System.out.println("\nHouve um empate técnico na primeira colocação!");
+        } else {
+            System.out.println("\nVencedor: " + nomesCandidatos[vencedorIndice] + " com " + votosCandidatos[vencedorIndice] + " votos.");
+        }
+    }
+
+    // Método que utiliza o obterIndiceTurma() para exibir os votos salvos na linha da matriz
+    static void exibirMatrizVotos() {
+        if (quantidadeCandidatos == 0) {
+            System.out.println("Nenhum candidato cadastrado.");
+            return;
+        }
+
+        System.out.println("\n=== MATRIZ DE VOTOS POR TURMA ===");
+        int indiceTurma = obterIndiceTurma();
+
+        if (quantidadeVotosTurma[indiceTurma] == 0) {
+            System.out.println("Nenhum voto foi registrado para a Turma " + (indiceTurma + 1) + " ainda.");
+            return;
+        }
+
+        System.out.println("\nHistórico de votos salvos para a Turma " + (indiceTurma + 1) + ":");
+        for (int i = 0; i < quantidadeVotosTurma[indiceTurma]; i++) {
+            int votoCandidato = votosPorTurma[indiceTurma][i];
+            int indCand = buscarCandidato(votoCandidato);
+            System.out.println("Eleitor " + (i + 1) + ": Voto no número " + votoCandidato + " (" + nomesCandidatos[indCand] + ")");
+        }
+    }
 }
 
 
