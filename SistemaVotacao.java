@@ -243,3 +243,15 @@ public class SistemaVotacao {
         if (totalVotos == 0) {
             System.out.println("Nenhum voto foi registrado.");
             return;
+        }
+        for (int i = 0; i < quantidadeCandidatos; i++) {
+            double percentual =
+                    (votosCandidatos[i] * 100.0) / totalVotos;
+
+            System.out.printf(
+                    "%s -> %d voto(s) (%.2f%%)%n",
+                    nomesCandidatos[i],
+                    votosCandidatos[i],
+                    percentual
+            );
+        }
