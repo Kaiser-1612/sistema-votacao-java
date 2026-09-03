@@ -159,7 +159,13 @@ public class SistemaVotacao {
             );
         }
     }
-    static int obterIndiceTurma() {
+    static void iniciarVotacao() {
+        if (quantidadeCandidatos == 0) {
+            System.out.println(
+                    "Cadastre os candidatos antes de iniciar a votação."
+            );
+            return;
+        }
         int turma;
 
         do {
@@ -170,16 +176,7 @@ public class SistemaVotacao {
             }
         } while (turma < 1 || turma > TOTAL_TURMAS);
 
-        return turma - 1;
-    }
-    static void iniciarVotacao() {
-        if (quantidadeCandidatos == 0) {
-            System.out.println("Cadastre os candidatos antes de iniciar a votação.");
-            return;
-        }
-
-        int indiceTurma = obterIndiceTurma();
-        int turmaReal = indiceTurma + 1;
+        int indiceTurma = turma - 1;
 
         if (quantidadeVotosTurma[indiceTurma] >= MAX_VOTANTES_POR_TURMA) {
             System.out.println("Essa turma já atingiu o limite de votantes.");
@@ -190,6 +187,7 @@ public class SistemaVotacao {
         System.out.println("\nDigite 0 para encerrar a votação desta turma.");
 
         while (quantidadeVotosTurma[indiceTurma] < MAX_VOTANTES_POR_TURMA) {
+
             int numero = lerInteiro("\nNúmero do candidato: ");
 
             if (numero == 0) {
@@ -200,83 +198,10 @@ public class SistemaVotacao {
             int indiceCandidato = buscarCandidato(numero);
 
             if (indiceCandidato == -1) {
-                System.out.println("Candidato inexistente. Tente novamente.");
-                continue;
-            }
-
-            int posicionVoto = quantidadeVotosTurma[indiceTurma];
-            votosPorTurma[indiceTurma][posicionVoto] = numero;
-            quantidadeVotosTurma[indiceTurma]++;
-            votosCandidatos[indiceCandidato]++;
-
-            System.out.println("Voto registrado com sucesso.");
-        }
-
-        if (quantidadeVotosTurma[indiceTurma] == MAX_VOTANTES_POR_TURMA) {
-            System.out.println("Limite de 10 votantes atingido.");
-        }
-    }
-
-    static void exibirResultado() {
-        if (quantidadeCandidatos == 0) {
-            System.out.println("Nenhum candidato cadastrado.");
-            return;
-        }
+                System.out.println(
+                        "Candidato inexistente. Tente novamente."
+                );
 
 
-        int totalVotos = 0;
-        for (int i = 0; i < quantidadeCandidatos; i++) {
-            totalVotos += votosCandidatos[i];
-        }
-
-        if (totalVotos == 0) {
-            System.out.println("Nenhum voto foi registrado.");
-            return;
-        }
-
-        System.out.println("\n=== RESULTADO FINAL ===");
-        for (int i = 0; i < quantidadeCandidatos; i++) {
-            System.out.println(nomesCandidatos[i] + " (" + numerosCandidatos[i] + "): " + votosCandidatos[i] + " votos");
-        }
-
-        int vencedorIndice = 0;
-        boolean empate = false;
-
-        for (int i = 1; i < quantidadeCandidatos; i++) {
-            if (votosCandidatos[i] > votosCandidatos[vencedorIndice]) {
-                vencedorIndice = i;
-                empate = false;
-            } else if (votosCandidatos[i] == votosCandidatos[vencedorIndice]) {
-                empate = true;
             }
         }
-
-        if (empate) {
-            System.out.println("\nHouve um empate técnico na primeira colocação!");
-        } else {
-            System.out.println("\nVencedor: " + nomesCandidatos[vencedorIndice] + " com " + votosCandidatos[vencedorIndice] + " votos.");
-        }
-    }
-
-
-
-    static void exibirMatrizVotos() {
-        System.out.println("\n===== MATRIZ DE VOTOS =====");
-
-        for (int i = 0; i < TOTAL_TURMAS; i++) {
-            System.out.print("Turma " + (i + 1) + ": ");
-
-            for (int j = 0; j < MAX_VOTANTES_POR_TURMA; j++) {
-                if (j < quantidadeVotosTurma[i]) {
-                    System.out.print(votosPorTurma[i][j] + " ");
-                } else {
-                    System.out.print("- ");
-                }
-            }
-
-            System.out.println();
-        }
-    }
-}
-
-
