@@ -201,7 +201,13 @@ public class SistemaVotacao {
                 System.out.println(
                         "Candidato inexistente. Tente novamente."
                 );
-
+                 continue;
 
             }
+            int posicaoVoto = quantidadeVotosTurma[indiceTurma];
+            votosPorTurma[indiceTurma][posicaoVoto] = numero;
+            quantidadeVotosTurma[indiceTurma]++;
+            votosCandidatos[indiceCandidato]++;
+
+            System.out.println("Voto registrado com sucesso.")
         }
